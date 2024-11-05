@@ -1,7 +1,8 @@
 import axios, { AxiosRequestHeaders, AxiosResponse } from "axios";
 import { getToken } from "./token";
 
-export const BASE_URL = process.env.REACT_APP_REST_API_ENDPOINT;
+export const BASE_URL =
+  process.env.REACT_APP_REST_API_ENDPOINT || "http://192.168.1.11:8080/api";
 
 const http = axios.create({
   baseURL: BASE_URL,

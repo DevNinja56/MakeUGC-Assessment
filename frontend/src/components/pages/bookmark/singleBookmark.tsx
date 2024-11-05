@@ -11,9 +11,16 @@ import LoaderSpinner from "../../common/loaderSpinner";
 interface propTyeps {
   bookmark: BOOKMARKS_TYPE;
   getAllBookmarks: () => void;
+  handleModal: (val: boolean) => void;
+  handleSelectedVal: (val: BOOKMARKS_TYPE) => void;
 }
 
-const SingleBookmark = ({ bookmark, getAllBookmarks }: propTyeps) => {
+const SingleBookmark = ({
+  bookmark,
+  getAllBookmarks,
+  handleModal,
+  handleSelectedVal,
+}: propTyeps) => {
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
   const [planLoading, setPlanLoading] = useState<boolean>(false);
 
@@ -54,7 +61,13 @@ const SingleBookmark = ({ bookmark, getAllBookmarks }: propTyeps) => {
 
   return (
     <div className="w-full bg-white border-2 border-primary rounded-md py-7 px-5 text-primary relative text-sm font-medium">
-      <p>
+      <p
+        onClick={() => {
+          handleSelectedVal(bookmark);
+          handleModal(true);
+        }}
+        className="hover:cursor-pointer"
+      >
         {bookmark?.generateId?.description?.slice(0, 100) +
           (bookmark?.generateId?.description?.length > 100 ? "..." : "") ||
           "No description available"}
@@ -71,15 +84,25 @@ const SingleBookmark = ({ bookmark, getAllBookmarks }: propTyeps) => {
         {planLoading ? (
           <LoaderSpinner color="text-white" />
         ) : bookmark?.planToUse ? (
-          <FaStar
-            onClick={onHandleChangePlan}
-            className="text-base cursor-pointer text-primary hover:opacity-50 transition-all duration-300"
-          />
+          <div className="relative group">
+            <FaStar
+              onClick={onHandleChangePlan}
+              className="text-base cursor-pointer text-primary hover:opacity-50 transition-all duration-300"
+            />
+            <div className="transition-all group-hover:opacity-100 opacity-0 bottom-[-36px] left-[-32px] px-2 py-1 bg-primary text-white text-nowrap absolute z-50 rounded-md  before:content-[''] before:absolute before:top-[-8px] before:left-1/2 before:transform before:-translate-x-1/2 before:border-[10px] before:border-transparent before:border-b-primary before:border-t-0">
+              <p>Pin to top</p>
+            </div>
+          </div>
         ) : (
-          <CiStar
-            onClick={onHandleChangePlan}
-            className="text-base cursor-pointer text-primary hover:opacity-50 transition-all duration-300"
-          />
+          <div className="relative group">
+            <CiStar
+              onClick={onHandleChangePlan}
+              className="text-base cursor-pointer text-primary hover:opacity-50 transition-all duration-300"
+            />
+            <div className="transition-all group-hover:opacity-100 opacity-0 bottom-[-36px] left-[-32px] px-2 py-1 bg-primary text-white text-nowrap absolute z-50 rounded-md  before:content-[''] before:absolute before:top-[-8px] before:left-1/2 before:transform before:-translate-x-1/2 before:border-[10px] before:border-transparent before:border-b-primary before:border-t-0">
+              <p>Pin to top</p>
+            </div>
+          </div>
         )}
       </div>
     </div>

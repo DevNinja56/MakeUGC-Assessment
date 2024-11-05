@@ -13,6 +13,7 @@ import { store } from "./store";
 import { ALL_ROUTES } from "./routes/constant,route";
 import LoaderSpinner from "./components/common/loaderSpinner";
 import Layout from "./routes/Layout";
+import "react-modern-drawer/dist/index.css";
 
 const Main = () => {
   const router = createBrowserRouter(
@@ -25,7 +26,7 @@ const Main = () => {
             <Layout isPrivate={isPrivate}>
               <Suspense
                 fallback={
-                  <div className="h-screen w-screen flex items-center justify-center">
+                  <div className="min-h-screen w-screen flex items-center justify-center">
                     <LoaderSpinner />
                   </div>
                 }

@@ -6,11 +6,22 @@ import ScreenLoader from "../../components/common/loaderSpinner/ScreenLoader";
 import { GENERATE_IDEAS_RESPONSE_TYPE } from "../../types";
 import Input from "../../components/common/input";
 import SingleIdea from "../../components/pages/idea/singleIdea";
+import IdeasDescriptionModal from "../../components/common/Modal/IdeasDescriptionModal";
 
 const Ideas = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [ideas, setIdeas] = useState<GENERATE_IDEAS_RESPONSE_TYPE[]>([]);
   const [search, setSearch] = useState<string | undefined>();
+
+  const [selectedModalData, setSelectedModalData] =
+    useState<GENERATE_IDEAS_RESPONSE_TYPE>({} as GENERATE_IDEAS_RESPONSE_TYPE);
+
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleModal = (val: boolean) => setModalOpen(val);
+  const handleSelectedVal = (val: GENERATE_IDEAS_RESPONSE_TYPE) => {
+    setSelectedModalData(val);
+  };
 
   const getAllIdeas = () => {
     setLoading(true);
@@ -48,11 +59,16 @@ const Ideas = () => {
         }
       />
       <h1 className="text-primary text-xl font-bold">Your Ideas</h1>
-      <div className="grid grid-cols-3 gap-7">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-7">
         {ideas && ideas.length > 0 ? (
           filteredIdeas.length > 0 ? (
             filteredIdeas.map((item) => (
-              <SingleIdea key={"ideas--" + item?._id} idea={item} />
+              <SingleIdea
+                key={"ideas--" + item?._id}
+                idea={item}
+                handleModal={handleModal}
+                handleSelectedVal={handleSelectedVal}
+              />
             ))
           ) : (
             <p className="text-sm">Not Found!</p>
@@ -60,6 +76,13 @@ const Ideas = () => {
         ) : (
           <p className="text-sm">No Ideas Found!</p>
         )}
+      </div>
+      <div>
+        <IdeasDescriptionModal
+          data={selectedModalData}
+          handleModal={handleModal}
+          open={modalOpen}
+        />
       </div>
     </div>
   );

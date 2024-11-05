@@ -10,6 +10,18 @@
   font-family: "Inter", sans-serif;
 }
 
+@media screen and (max-width: 640px) {
+  #header-right-div {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 641px) {
+  #header-right-div {
+    display: flex;
+  }
+}
+
 .animate-auth-image {
   animation: authImage 10s ease-in-out infinite;
 }
